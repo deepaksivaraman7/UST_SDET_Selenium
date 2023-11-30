@@ -37,6 +37,14 @@ namespace BookMyShow.PageObjects
         [CacheLookup]
         private IWebElement? TermsAndConditionsAcceptButton { get; set; }
 
+        [FindsBy(How = How.XPath, Using = "*[@class='add-cta add-btn']")]
+        [CacheLookup]
+        private IWebElement? AddFoodItemButton { get; set; }
+
+        [FindsBy(How = How.Id, Using = "fdd")]
+        [CacheLookup]
+        private IWebElement? FoodBillSummaryList { get; set; }
+
         [FindsBy(How = How.Id, Using = "prePay")]
         [CacheLookup]
         private IWebElement? PaymentConfirmButton { get; set; }
@@ -60,6 +68,21 @@ namespace BookMyShow.PageObjects
         public void TermsAndConditionsAccept()
         {
             TermsAndConditionsAcceptButton?.Click();
+        }
+        public void AddFoodItem()
+        {
+            AddFoodItemButton?.Click();
+        }
+        public bool FoodSummaryCheck()
+        {
+            if (FoodBillSummaryList.GetCssValue("display") == "none")
+            {
+                return false;
+            }
+            else 
+            { 
+                return true;
+            }
         }
         public PaymentPage PaymentConfirmButtonClick()
         {

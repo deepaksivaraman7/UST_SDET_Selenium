@@ -21,9 +21,12 @@ namespace BookMyShow.Utilities
         public ExtentReports extent;
         ExtentSparkReporter sparkReporter;
         public ExtentTest test;
+        public string currDir = Directory.GetParent("../../../").FullName;
+
+        
+
         public void ReadConfigSettings()
         {
-            string currDir = Directory.GetParent(@"../../../").FullName;
             properties = new(); //Initializing
             string fileName = currDir + "/configsettings/config.properties";
             string[] lines = File.ReadAllLines(fileName);
@@ -47,7 +50,7 @@ namespace BookMyShow.Utilities
             fluentWait.Message = "Element not found";
             return fluentWait;
         }
-        public bool CheckLinkStatus(string url)
+        public static bool CheckLinkStatus(string url)
         {
             try
             {
@@ -63,11 +66,11 @@ namespace BookMyShow.Utilities
                 return false;
             }
         }
+        
         public void TakeScreenshot()
         {
             ITakesScreenshot ts = (ITakesScreenshot)driver;
             Screenshot ss = ts.GetScreenshot();
-            string currDir = Directory.GetParent("../../../").FullName;
             string filePath = currDir + "/Screenshots/Screenshot_" + DateTime.Now.ToString("yyyyMMdd_Hmmss") + ".png";
             ss.SaveAsFile(filePath);
         }
@@ -92,9 +95,13 @@ namespace BookMyShow.Utilities
         [OneTimeSetUp]
         public void InitializeBrowser()
         {
-            string currdir = Directory.GetParent(@"../../../").FullName;
+            string logFilePath = currDir + "/Logs/Log_" + DateTime.Now.ToString("yyyyMMdd_Hmmss") + ".txt";
+            Log.Logger = new LoggerConfiguration()
+                    .WriteTo.Console()
+                    .WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day)
+                    .CreateLogger();
             extent = new ExtentReports();
-            sparkReporter = new ExtentSparkReporter(currdir + "/ExtentReports/extent-report" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".html");
+            sparkReporter = new ExtentSparkReporter(currDir + "/ExtentReports/extent-report" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".html");
             extent.AttachReporter(sparkReporter);
             ReadConfigSettings();
             if (properties["browser"].ToLower() == "chrome")
@@ -108,11 +115,13 @@ namespace BookMyShow.Utilities
             driver.Url = properties["baseUrl"];
             driver.Manage().Window.Maximize();
         }
+
         [OneTimeTearDown]
         public void Cleanup()
         {
             driver.Quit();
             extent.Flush();
+            Log.CloseAndFlush();
         }
     }
 }

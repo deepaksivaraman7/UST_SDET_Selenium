@@ -16,14 +16,6 @@ namespace BookMyShow.TestScripts
         [Test, Order(1), Category("Regression Test")]
         public void BookAMovieTest()
         {
-            string currDir = Directory.GetParent("../../../").FullName;
-
-            string logFileilePath = currDir + "/Logs/Log_" + DateTime.Now.ToString("yyyyMMdd_Hmmss") + ".txt";
-            Log.Logger = new LoggerConfiguration()
-                .WriteTo.Console()
-                .WriteTo.File(logFileilePath, rollingInterval: RollingInterval.Day)
-                .CreateLogger();
-
             var homePage = new BMSHomePage(driver);
             Log.Information("Book a movie test started");
 
@@ -39,8 +31,18 @@ namespace BookMyShow.TestScripts
                 }
                 try
                 {
+                    TakeScreenshot();
+                    Assert.That(driver.Title, Does.Contain("BookMyShow"));
+
+                    string ? city = excelData.City;
                     string? numberOfSeats = excelData.NumberOfSeats;
-                    string? city = excelData.City;
+                    string? email = excelData.Email;
+                    string? mobno = excelData.MobileNumber;
+                    string? cardno = excelData.CardNumber;
+                    string? nameoncard = excelData.NameOnCard;
+                    string? cardexpirymonth = excelData.CardExpiryMonth;
+                    string? cardexpiryyear = excelData.CardExpiryYear;
+                    string? cvv = excelData.CardCvv;
 
                     homePage.SelectCity(city);
                     Log.Information("City selected");
@@ -55,9 +57,9 @@ namespace BookMyShow.TestScripts
                     var theatresPage = moviePage.ClickBookTickets();
                     Log.Information("Clicked Book Tickets Button");
                     TakeScreenshot();
-                    string buyTicketsUrl = driver.Url;
-                    Assert.That(driver.Url, Does.Contain("buytickets"));
+                    Assert.That(driver.Title, Does.Contain("Online Ticket Booking"));
                     
+                    string buyTicketsUrl = driver.Url;
                     var seatLayoutPage = theatresPage.TimeSlotSelect();
                     Log.Information("Selected Timeslot");
                     TakeScreenshot();
@@ -78,12 +80,26 @@ namespace BookMyShow.TestScripts
                     seatLayoutPage.TermsAndConditionsAccept();
                     Log.Information("Accepted terms and conditions");
 
+                    seatLayoutPage.AddFoodItem();
+                    Log.Information("Added food item");
+                    TakeScreenshot();
+                    Assert.That(seatLayoutPage.FoodSummaryCheck(), Is.True);
+
                     var paymentPage = seatLayoutPage.PaymentConfirmButtonClick();
                     Log.Information("Payment confirmation button clicked");
 
-                    Assert.That(paymentPage.GetUrl(), Does.Contain("payment"));
-                    LogTestResult("Book a movie Test", "Book a movie success");
+                    Assert.That(driver.Url, Does.Contain("payment"));
 
+                    paymentPage.EmailInputText(email);
+                    paymentPage.MobileInputText(mobno);
+                    paymentPage.CardNumberInputText(cardno);
+                    paymentPage.NameOnCardInputText(nameoncard);
+                    paymentPage.CardExpiryMonthInputText(cardexpirymonth);
+                    paymentPage.CardExpiryYearInputText(cardexpiryyear);
+                    paymentPage.CardCvvInputText(cvv);
+                    paymentPage.MakePaymentButtonClick();
+
+                    LogTestResult("Book a movie Test", "Book a movie success");
                     test = extent.CreateTest("Book a movie test - Passed");
                     test.Pass("Book a movie Success");
                 }
@@ -93,11 +109,9 @@ namespace BookMyShow.TestScripts
                     LogTestResult("Book a movie Test", "Book a movie failed", ex.Message);
                     test = extent.CreateTest("Book a movie - Failed");
                     test.Fail("Book a movie Failed");
-
                 }
 
             }
-            Log.CloseAndFlush();
         }
     }
 }

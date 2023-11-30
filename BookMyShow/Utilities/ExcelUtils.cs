@@ -34,7 +34,15 @@ namespace BookMyShow.Utilities
                             {
                                 City = GetValueOrDefault(row, "city"),
                                 MovieSearch = GetValueOrDefault(row, "searchtext"),
-                                NumberOfSeats=GetValueOrDefault(row,"numberofseats")
+                                NumberOfSeats=GetValueOrDefault(row,"numberofseats"),
+                                Email= GetValueOrDefault(row, "email"),
+                                MobileNumber= GetValueOrDefault(row,"mobno"),
+                                CardNumber=GetValueOrDefault(row,"cardno"),
+                                NameOnCard=GetValueOrDefault(row,"nameoncard"),
+                                CardExpiryMonth = GetValueOrDefault(row, "cardexpirymonth"),
+                                CardExpiryYear = GetValueOrDefault(row, "cardexpiryyear"),
+                                CardCvv = GetValueOrDefault(row, "cvv"),
+
                             };
                             excelDataList.Add(excelData);
                         }
