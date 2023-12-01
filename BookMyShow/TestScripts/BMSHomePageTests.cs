@@ -35,7 +35,7 @@ namespace BookMyShow.TestScripts
 
         }
         [Test, Order(2), Category("Smoke Test")]
-        public void ALlLinksStatusTest()
+        public void AllLinksStatusTest()
         {
             var homePage = new BMSHomePage(driver);
             try
