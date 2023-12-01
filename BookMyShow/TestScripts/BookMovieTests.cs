@@ -46,24 +46,16 @@ namespace BookMyShow.TestScripts
 
                     homePage.SelectCity(city);
                     Log.Information("City selected");
-                    //TakeScreenshot();
-                    //Assert.That(driver.Url, Does.Contain(city));
 
                     var moviePage = homePage.SelectMovie();
                     Log.Information("Movie Selected");
-                    //TakeScreenshot();
-                    //Assert.That(driver.Url, Does.Contain("movies"));
 
                     var theatresPage = moviePage.ClickBookTickets();
                     Log.Information("Clicked Book Tickets Button");
-                    //TakeScreenshot();
-                    //Assert.That(driver.Title, Does.Contain("Online Ticket Booking"));
                     
                     string buyTicketsUrl = driver.Url;
                     var seatLayoutPage = theatresPage.TimeSlotSelect();
                     Log.Information("Selected Timeslot");
-                    //TakeScreenshot();
-                    //Assert.That(driver.Url, Is.EqualTo(buyTicketsUrl + "#!seatlayout"));
 
                     seatLayoutPage.SelectNumberofSeats(numberOfSeats);
                     Log.Information("Selected number of seats");
@@ -82,8 +74,6 @@ namespace BookMyShow.TestScripts
 
                     seatLayoutPage.AddFoodItem();
                     Log.Information("Added food item");
-                    //TakeScreenshot();
-                    //Assert.That(seatLayoutPage.FoodSummaryCheck(), Is.True);
 
                     var paymentPage = seatLayoutPage.PaymentConfirmButtonClick();
                     Log.Information("Payment confirmation button clicked");
