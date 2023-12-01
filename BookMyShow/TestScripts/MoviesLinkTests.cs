@@ -32,6 +32,8 @@ namespace BookMyShow.TestScripts
                 LogTestResult("Movies link redirect Test", "Movies link redirect failed", ex.Message);
                 test = extent.CreateTest("Movies link redirect Test - Failed");
                 test.Pass("Movies link redirect Failed");
+                TakeScreenshot();
+                Assert.Fail(ex.Message);
             }
 
         }
@@ -51,6 +53,8 @@ namespace BookMyShow.TestScripts
                 LogTestResult("Movies filter Test", "Movies filter failed", ex.Message);
                 test = extent.CreateTest("Movies filter Test - Failed");
                 test.Pass("Movies filter Failed");
+                TakeScreenshot();
+                Assert.Fail(ex.Message);
             }
 
         }

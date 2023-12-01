@@ -68,11 +68,11 @@ namespace BookMyShow.TestScripts
                 }
                 catch (Exception ex)
                 {
-                    TakeScreenshot();
-                    Assert.Fail(ex.Message);
                     LogTestResult("Activity book Test", "Activity book failed", ex.Message);
                     test = extent.CreateTest("Activity book - Failed");
                     test.Fail("Activity book Failed");
+                    TakeScreenshot();
+                    Assert.Fail(ex.Message);
                 }
             }
         }

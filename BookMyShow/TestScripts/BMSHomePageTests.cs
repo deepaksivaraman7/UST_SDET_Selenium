@@ -31,6 +31,8 @@ namespace BookMyShow.TestScripts
                 LogTestResult("Select city Test", "Select city failed",ex.Message);
                 test = extent.CreateTest("Select city Test - Failed");
                 test.Pass("Select city Failed");
+                TakeScreenshot();
+                Assert.Fail(ex.Message);
             }
 
         }
@@ -52,6 +54,8 @@ namespace BookMyShow.TestScripts
                 LogTestResult("All links status test", "All links status check failed", ex.Message);
                 test = extent.CreateTest("All links status test - Failed");
                 test.Pass("All links status Failed");
+                TakeScreenshot();
+                Assert.Fail(ex.Message);
             }
 
         }
@@ -74,6 +78,8 @@ namespace BookMyShow.TestScripts
                 LogTestResult("Change location test", "Change location failed", ex.Message);
                 test = extent.CreateTest("Change location test - Failed");
                 test.Pass("Change location Failed");
+                TakeScreenshot();
+                Assert.Fail(ex.Message);
             }
 
         }
@@ -95,6 +101,8 @@ namespace BookMyShow.TestScripts
                 LogTestResult(link+" page redirect test", link+" page redirect failed", ex.Message);
                 test = extent.CreateTest(link+" page redirect test - Failed");
                 test.Pass(link+" page redirect Failed");
+                TakeScreenshot();
+                Assert.Fail(ex.Message);
             }
 
         }
@@ -120,6 +128,8 @@ namespace BookMyShow.TestScripts
                 LogTestResult("Valid SignIn test", "Valid SignIn failed", ex.Message);
                 test = extent.CreateTest("Valid SignIn test - Failed");
                 test.Pass("Valid SignIn Failed");
+                TakeScreenshot();
+                Assert.Fail(ex.Message);
             }
 
         }
@@ -144,6 +154,8 @@ namespace BookMyShow.TestScripts
                 LogTestResult("Invalid SignIn test", "Invalid SignIn failed", ex.Message);
                 test = extent.CreateTest("Invalid SignIn test - Failed");
                 test.Pass("Invalid SignIn Failed");
+                TakeScreenshot();
+                Assert.Fail(ex.Message);
             }
 
         }

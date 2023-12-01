@@ -107,11 +107,11 @@ namespace BookMyShow.TestScripts
                 }
                 catch (Exception ex)
                 {
-                    TakeScreenshot();
-                    Assert.Fail(ex.Message);
                     LogTestResult("Book a movie Test", "Book a movie failed", ex.Message);
                     test = extent.CreateTest("Book a movie - Failed");
                     test.Fail("Book a movie Failed");
+                    TakeScreenshot();
+                    Assert.Fail(ex.Message);
                 }
 
             }
