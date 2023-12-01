@@ -3,6 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using RazorEngine.Compilation.ImpromptuInterface;
 using SeleniumExtras.PageObjects;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -140,7 +141,7 @@ namespace BookMyShow.PageObjects
                 string url = link.GetAttribute("href");
                 if (url == null)
                 {
-                    Console.WriteLine("Url is null");
+                    Log.Information("Url is null");
                     invalidUrls.Add(url);
                     continue;
                 }
@@ -149,11 +150,11 @@ namespace BookMyShow.PageObjects
                     bool isWorking = CoreCodes.CheckLinkStatus(url);
                     if (isWorking)
                     {
-                        Console.WriteLine(url + " is working");
+                        Log.Information(url + " is working");
                     }
                     else
                     {
-                        Console.WriteLine(url + " is not working");
+                        Log.Information(url + " is not working");
                         invalidUrls.Add(url);
                     }
                 }

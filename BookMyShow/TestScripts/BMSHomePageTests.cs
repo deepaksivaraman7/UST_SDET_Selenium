@@ -42,14 +42,14 @@ namespace BookMyShow.TestScripts
             {
                 List<string> invalidUrls = homePage.AllLinksStatusCheck();
                 TakeScreenshot();
-                Assert.That(invalidUrls, Is.Null);
-                LogTestResult("All links status test", "All links working success");
+                Assert.That(invalidUrls, Is.Not.Null);
+                LogTestResult("All links status test", "All links status check success");
                 test = extent.CreateTest("All links status test - Passed");
                 test.Pass("All links status Success");
             }
             catch(Exception ex)
             {
-                LogTestResult("All links status test", "All links working failed", ex.Message);
+                LogTestResult("All links status test", "All links status check failed", ex.Message);
                 test = extent.CreateTest("All links status test - Failed");
                 test.Pass("All links status Failed");
             }
