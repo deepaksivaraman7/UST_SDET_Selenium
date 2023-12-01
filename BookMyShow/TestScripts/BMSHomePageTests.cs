@@ -98,8 +98,8 @@ namespace BookMyShow.TestScripts
             }
 
         }
-        [Test, Order(5), Category("Smoke Test"),TestCaseSource(nameof(MobileNumbers))]
-        public void SignInTest(string mobno)
+        [Test, Order(5), Category("Smoke Test"),TestCaseSource(nameof(ValidMobileNumbers))]
+        public void ValidSignInTest(string mobno)
         {
             var homePage = new BMSHomePage(driver);
             try
@@ -109,18 +109,41 @@ namespace BookMyShow.TestScripts
                 bool success=homePage.ContinueButtonClick();
                 TakeScreenshot();
                 Assert.That(success, Is.True);
-                LogTestResult("SignIn test", "SignIn success");
-                test = extent.CreateTest("SignIn test - Passed");
-                test.Pass("SignIn Success");
+                LogTestResult("Valid SignIn test", "Valid SignIn success");
+                test = extent.CreateTest("Valid SignIn test - Passed");
+                test.Pass("Valid SignIn Success");
                 homePage.BackToSignInClick();
                 homePage.CloseSignInClick();
             }
             catch (Exception ex)
             {
-                LogTestResult("SignIn test", "SignIn failed", ex.Message);
-                test = extent.CreateTest( "SignIn test - Failed");
-                test.Pass("SignIn Failed");
+                LogTestResult("Valid SignIn test", "Valid SignIn failed", ex.Message);
+                test = extent.CreateTest("Valid SignIn test - Failed");
+                test.Pass("Valid SignIn Failed");
+            }
+
+        }
+        [Test, Order(5), Category("Smoke Test"), TestCaseSource(nameof(InvalidMobileNumbers))]
+        public void InvalidSignInTest(string mobno)
+        {
+            var homePage = new BMSHomePage(driver);
+            try
+            {
+                homePage.SignInButtonClick();
+                homePage.MobileNumberInput(mobno);
+                bool success = homePage.ContinueButtonClick();
+                TakeScreenshot();
+                Assert.That(success, Is.False);
+                LogTestResult("Invalid SignIn test", "Invalid SignIn success");
+                test = extent.CreateTest("Invalid SignIn test - Passed");
+                test.Pass("Invalid SignIn Success");
                 homePage.CloseSignInClick();
+            }
+            catch (Exception ex)
+            {
+                LogTestResult("Invalid SignIn test", "Invalid SignIn failed", ex.Message);
+                test = extent.CreateTest("Invalid SignIn test - Failed");
+                test.Pass("Invalid SignIn Failed");
             }
 
         }
@@ -136,13 +159,19 @@ namespace BookMyShow.TestScripts
                 new object[]{"Activities"},
             };
         }
-        static object[] MobileNumbers()
+        static object[] ValidMobileNumbers()
+        {
+            return new object[]
+            {
+                new object[]{"1234567890"},
+                new object[]{"9876543210"},
+            };
+        }
+        static object[] InvalidMobileNumbers()
         {
             return new object[]
             {
                 new object[]{"12345"},
-                new object[]{"1234567890"},
-                new object[]{"9876543210"},
                 new object[]{""},
                 new object[]{"abcd"},
             };

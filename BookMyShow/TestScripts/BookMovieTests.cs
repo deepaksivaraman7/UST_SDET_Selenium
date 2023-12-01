@@ -34,7 +34,7 @@ namespace BookMyShow.TestScripts
                     TakeScreenshot();
                     Assert.That(driver.Title, Does.Contain("BookMyShow"));
 
-                    string ? city = excelData.City;
+                    string? city = excelData.City;
                     string? numberOfSeats = excelData.NumberOfSeats;
                     string? email = excelData.Email;
                     string? mobno = excelData.MobileNumber;
